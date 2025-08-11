@@ -21,7 +21,8 @@ class CreatePostsTable extends Migration
             $table->text('caption')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('pet_id')->references('id')->on('pets')->onDelete('cascade');
         });
     }
 
