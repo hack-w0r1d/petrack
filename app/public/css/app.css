@@ -70,9 +70,9 @@ body {
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
-  color: #212529;
+  color: white;
   text-align: left;
-  background-color: #f8fafc;
+  background-color: black;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -4543,6 +4543,7 @@ input[type=button].btn-block {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.5);
 }
 
 .navbar .container,
@@ -5004,9 +5005,9 @@ input[type=button].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: black;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: 0.5px solid rgba(255, 255, 255, 0.5);
   border-radius: 0.25rem;
 }
 
@@ -10930,4 +10931,3 @@ a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
-
