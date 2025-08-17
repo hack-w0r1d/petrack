@@ -9,6 +9,10 @@ use App\Tag;
 
 class Post extends Model
 {
+    protected $fillable = [
+        'pet_id', 'image_path', 'caption'
+    ];
+
     use SoftDeletes;
 
     public function user()
