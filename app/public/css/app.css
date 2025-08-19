@@ -177,7 +177,6 @@ a {
 
 a:hover {
   color: rgb(28.75, 104.3214285714, 166.75);
-  text-decoration: underline;
 }
 
 a:not([href]):not([class]) {
@@ -415,6 +414,11 @@ h5,
 h6,
 .h6 {
   font-size: 0.9rem;
+}
+
+.main-content {
+  margin-left: 250px;
+  width: 100%;
 }
 
 .lead {
@@ -3426,6 +3430,7 @@ input[type=button].btn-block {
   z-index: 1000;
   display: none;
   float: left;
+  width: 120%;
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
@@ -3433,7 +3438,7 @@ input[type=button].btn-block {
   color: #212529;
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: var(--dark);
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
@@ -3517,6 +3522,10 @@ input[type=button].btn-block {
 
 .dropup .dropdown-toggle:empty::after {
   margin-left: 0;
+}
+
+.dropup::marker {
+  content: none;
 }
 
 .dropright .dropdown-menu {
@@ -3604,7 +3613,7 @@ input[type=button].btn-block {
   padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: white;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -3613,9 +3622,9 @@ input[type=button].btn-block {
 
 .dropdown-item:hover,
 .dropdown-item:focus {
-  color: rgb(21.6283783784, 24.25, 26.8716216216);
+  color: white;
   text-decoration: none;
-  background-color: #e9ecef;
+  background-color: gray;
 }
 
 .dropdown-item.active,
@@ -4450,8 +4459,13 @@ input[type=button].btn-block {
   list-style: none;
 }
 
+.nav li:hover {
+  background-color: var(--dark);
+}
+
 .nav-link {
   display: block;
+  margin-bottom: 0;
   padding: 0.5rem 1rem;
 }
 
@@ -4997,6 +5011,14 @@ input[type=button].btn-block {
 .navbar-dark .navbar-text a:hover,
 .navbar-dark .navbar-text a:focus {
   color: #fff;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
 }
 
 .card {

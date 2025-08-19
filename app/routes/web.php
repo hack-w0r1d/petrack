@@ -13,8 +13,6 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::middleware('auth')->group(function() {
-
+    Route::get('/home', 'HomeController@index')->name('home');
 });
