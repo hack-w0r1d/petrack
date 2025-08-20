@@ -1,12 +1,60 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <!-- 投稿一覧 -->
-        <div class="col-md-8 border-right">投稿一覧</div>
+        <div class="col-md-7 offset-md-1 pt-4">
+            <div class="post-wrapper mx-auto" style="max-width: 33vw;">
+                @foreach ($posts as $post)
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="https://picsum.photos/200" class="rounded-circle" width="40" height="40" alt="プロフィール画像">
+                                <div class="ml-2">
+                                    <div class="font-weight-bold">{{ $post->user->name }}</div>
+                                    <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-sm dropdown-toggle" type="button" id="postMenu{{ $post->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="bi bi-three-dots" style="color: white; font-size: 1.3rem"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="postMenu{{ $post->id }}">
+                                    <a class="dropdown-item" href="#">編集</a>
+                                    <a class="dropdown-item" href="#">削除</a>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="https://picsum.photos/200" class="card-img-top" alt="投稿画像">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <button class="btn btn-link p-0 mr-3 text-muted"><i class="fa-solid fa-paw"></i></button>
+                                <span class="mr-4">{{ $post->likes_count ?? 0 }}</span>
+
+                                <button class="btn btn-link p-0 mr-3 text-white"><i class="bi bi-chat"></i></button>
+                                <span>{{ $post->comments_count ?? 0 }}</span>
+                            </div>
+
+                            <p class="mb-1"><span class="font-weight-bold mr-2">{{ $post->user->name }}</span>{{ $post->caption }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
         <!-- おすすめ(仮) -->
-        <div class="col-md-4">おすすめ</div>
+        <div class="col-md-4 pt-4">
+            <div class="d-flex align-items-center">
+                <a href="{{ route('profile.show', ['profile' => Auth::user()->id]) }}">
+                    <img src="https://picsum.photos/200" class="rounded-circle mr-2" width="40" height="40" alt="プロフィール画像">
+                </a>
+                <a class="ml-2" href="{{ route('profile.show', ['profile' => Auth::user()->id]) }}">
+                    <div>
+                        <div class="text-white font-weight-bold">{{ Auth::user()->name }}</div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

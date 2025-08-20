@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/script.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/34862077a1.js" crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -24,11 +26,11 @@
     <div id="app">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 d-none d-md-block">
+                <div class="d-none d-md-block">
                     <!-- 左サイドバー -->
                     <nav class="vh-100 d-flex flex-column text-white border-right p-3 sidebar">
                         <!-- タイトル -->
-                        <div class="my-4" style="font-size: 1.25rem;">
+                        <div class="py-4 pl-3" style="font-size: 1.25rem;">
                             <a href="{{ route('home') }}" class="text-white h2">
                                 {{ config('app.name', 'Laravel') }}
                             </a>
@@ -52,7 +54,7 @@
                                     <i class="bi bi-plus-square-fill mr-3"></i>作成</a>
                             </li>
                             <li class="nav-item my-3">
-                                <a class="nav-link text-white h5" href="">
+                                <a class="nav-link text-white h5" href="{{ route('profile.show', ['profile' => Auth::user()->id]) }}">
                                     <i class="bi bi-person-fill mr-3"></i>プロフィール</a>
                             </li>
                         </ul>
@@ -82,7 +84,7 @@
                 </div>
 
                 <!-- メインコンテンツ -->
-                <main role="main" class="p-3 main-content">
+                <main role="main" class="p-3 main-content" style="margin-left: 250px;">
                     @yield('content')
                 </main>
             </div>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -45,7 +45,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('profile.show', [
+            'id' => $id
+        ]);
     }
 
     /**
@@ -56,8 +58,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update', $post);  // 自身の投稿以外は403エラー
-        return view('');
+        //
     }
 
     /**
@@ -80,8 +81,6 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete', $post);  // 自身の投稿以外は403エラー
-        // $post->delete();
-        return redirect()->route('');
+        //
     }
 }

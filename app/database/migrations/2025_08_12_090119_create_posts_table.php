@@ -15,11 +15,14 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('pet_id')->nullable()->constrained('pets')->nullonDelete();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('pet_id')->nullable();
             $table->string('image_path');
             $table->text('caption')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('pet_id')->references('id')->on('pets')->onDelete('set null');
         });
     }
 
