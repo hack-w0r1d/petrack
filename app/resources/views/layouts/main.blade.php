@@ -25,7 +25,6 @@
 <body>
     <div id="app">
         <div class="container-fluid">
-            <div class="row">
                 <div class="d-none d-md-block">
                     <!-- 左サイドバー -->
                     <nav class="vh-100 d-flex flex-column text-white border-right p-3 sidebar">
@@ -50,7 +49,7 @@
                                     <i class="bi bi-compass-fill mr-3"></i>発見</a>
                             </li>
                             <li class="nav-item my-3">
-                                <a class="nav-link text-white h5" href="">
+                                <a class="nav-link text-white h5" href="{{ route('posts.create') }}">
                                     <i class="bi bi-plus-square-fill mr-3"></i>作成</a>
                             </li>
                             <li class="nav-item my-3">
@@ -84,7 +83,7 @@
                 </div>
 
                 <!-- メインコンテンツ -->
-                <main role="main" class="p-3 main-content" style="margin-left: 250px;">
+                <main role="main" class="p-3">
                     @yield('content')
                 </main>
             </div>

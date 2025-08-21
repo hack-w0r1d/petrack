@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -23,8 +25,59 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
+
+    public function createDetail(Request $request) {
+
+        $request->validate([
+            'image' => 'required|file|image|max:2048',
+        ]);
+
+        $image = $request->file('image');
+        $path = $image->store('temp', 'public');
+
+        session(['temp_image' => $path]);
+
+        // $tags = Tag::all();
+        // return view('posts.create_detail', compact('path', 'tags'));
+        return redirect()->route('posts.create.detail');
+    }
+
+    public function showCreateDetail() {
+
+        $imagePath = session('temp_image');
+        $tags = Tag::all();
+
+        return view('posts.create_detail', compact('imagePath', 'tags'));
+    }
+
+    public function confirm(Request $request) {
+
+        // $imagePath = session('temp_image');
+        // $caption = $request->caption;
+
+        session(['caption' => $request->caption]);
+
+        // return 'GET route reached';
+        return redirect()->route('posts.confirm.show');
+        // return view('posts.confirm', compact('imagePath', 'caption'));
+    }
+
+    public function showConfirm() {
+        return 'showConfirm reached';
+    }
+
+    // public function showConfirm() {
+    //     dd('showConfirm reached', session()->all());
+
+    //     $imagePath = session('temp_image');
+    //     $caption = session('caption');
+
+    //     dd($imagePath, $caption);
+
+    //     return view('posts.confirm', compact('imagePath', 'caption'));
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -34,7 +87,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $posts = Post::with('user')->orderBy('created_at', 'desc')->get();
+        return view('home', compact('posts'));
     }
 
     /**

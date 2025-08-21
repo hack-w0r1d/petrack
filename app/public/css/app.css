@@ -77,6 +77,27 @@ body {
   background-color: black;
 }
 
+main {
+  margin-left: 250px;
+}
+
+@media (max-width: 768px) {
+  main {
+    margin-left: 0;
+  }
+}
+
+.post-wrapper {
+  max-width: 33vw;
+}
+
+@media (max-width: 768px) {
+  .post-wrapper {
+    max-width: none;
+  }
+}
+
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
@@ -213,6 +234,15 @@ figure {
 img {
   vertical-align: middle;
   border-style: none;
+}
+
+.upload-preview {
+  max-width: 500px;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 svg {
@@ -416,11 +446,6 @@ h5,
 h6,
 .h6 {
   font-size: 0.9rem;
-}
-
-.main-content {
-  /* margin-left: 250px; */
-  width: 100%;
 }
 
 .lead {
@@ -5019,6 +5044,7 @@ input[type=button].btn-block {
   position: fixed;
   top: 0;
   left: 0;
+  /* flex: 0, 0, 250px; */
   width: 250px;
   height: 100vh;
 }

@@ -5,7 +5,7 @@
     <div class="row">
         <!-- 投稿一覧 -->
         <div class="col-md-7 offset-md-1 pt-4">
-            <div class="post-wrapper mx-auto" style="max-width: 33vw;">
+            <div class="post-wrapper mx-auto">
                 @foreach ($posts as $post)
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
