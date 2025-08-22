@@ -26,7 +26,9 @@
                                 </div>
                             </div>
                         </div>
-                        <img src="https://picsum.photos/200" class="card-img-top" alt="投稿画像">
+                        <!-- 投稿画像 -->
+                        <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top" alt="投稿画像">
+                        <!-- 足跡・コメント -->
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
                                 <button class="btn btn-link p-0 mr-3 text-muted"><i class="fa-solid fa-paw"></i></button>

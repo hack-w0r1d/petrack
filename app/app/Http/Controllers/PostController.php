@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\Tag;
 
@@ -28,8 +29,8 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function createDetail(Request $request) {
-
+    public function createDetail(Request $request)
+    {
         $request->validate([
             'image' => 'required|file|image|max:2048',
         ]);
@@ -42,22 +43,23 @@ class PostController extends Controller
         return redirect()->route('posts.create.detail');
     }
 
-    public function showCreateDetail() {
-
+    public function showCreateDetail()
+    {
         $imagePath = session('temp_image');
         $tags = Tag::all();
 
         return view('posts.create_detail', compact('imagePath', 'tags'));
     }
 
-    public function createConfirm(Request $request) {
-
+    public function createConfirm(Request $request)
+    {
         session(['caption' => $request->caption]);
 
         return redirect()->route('posts.create.confirm');
     }
 
-    public function showCreateConfirm() {
+    public function showCreateConfirm()
+    {
 
         $imagePath = session('temp_image');
         $caption = session('caption');
@@ -71,10 +73,33 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $posts = Post::with('user')->orderBy('created_at', 'desc')->get();
-        return view('home', compact('posts'));
+        $tempPath = session('temp_image');
+        $caption = session('caption');
+
+        if (!$tempPath) {
+            return redirect()->route('posts.create')->withErrors('画像が見つかりません');
+        }
+
+        // $validated = $request->validate([
+        //     'image' => 'required|file|image|max:2048',
+        //     'caption' => 'nullable|string|max:300',
+        // ]);
+
+        $filename = basename($tempPath);
+        $newPath = 'uploads/' . $filename;
+        Storage::disk('public')->move($tempPath, $newPath);
+
+        $post = new Post();
+        $post->user_id = auth()->id();
+        $post->image_path = $newPath;
+        $post->caption = $caption;
+        $post->save();
+
+        session()->forget(['temp_image', 'caption']);
+
+        return redirect()->route('home')->with('success', '投稿が完了しました！');
     }
 
     /**

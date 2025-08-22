@@ -1,5 +1,82 @@
 @extends('layouts.main')
 
 @section('content')
-マイページ
+<div class="col-md-10 mx-auto">
+    <div class="container mt-4">
+        <div class="row align-items-center">
+            <!-- プロフィール画像 -->
+            <div class="col-md-3" tect-center>
+                <img src="https://picsum.photos/200" class="rounded-circle img-fluid" alt="プロフィール画像">
+            </div>
+            <!-- ユーザー情報 -->
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>{{ $user->name }}</h4>
+
+                    <!-- プロフィール編集 / フォローステータス -->
+                    <!-- 自分のプロフィールかどうかで表示切り替え -->
+                    @if(auth()->id() === $user->id)
+                        <a href="#" class="btn btn-outline-secondary btn-sm">プロフィール編集</a>
+                    @else
+                        <follow-button :user-id="{{ $user->id }}"></follow-button>
+                    @endif
+                </div>
+
+                <!-- 投稿件数 / フォロー / フォロワー -->
+                <div class="mt-2">
+                    <span>投稿<strong>{{ $user->posts->count() }}</strong>件</span>
+                    <span class="ml-3">フォロー<strong>$user->followings->count()</strong>人</span>
+                    <span class="ml-3">フォロワー<strong>$user->followers->count()</strong>人</span>
+                </div>
+
+                <!-- プロフィール紹介文 -->
+                <div class="mt-2">
+                    <p>$user->bio</p>
+                </div>
+            </div>
+            <!-- ペット -->
+            <div class="d-flex align-items-center">
+                @if($user->id === Auth::id())
+                    @if($user->pets->isNotEmpty())
+                        @foreach($user->pets as $pet)
+                            <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mr-2" alt="{{ $pet->name }}">
+                        @endforeach
+                    @endif
+
+                    <a href="#" class="mt-4 ml-5">
+                        <i class="bi bi-plus-circle text-secondary" style="font-size: 100px;"></i>
+                    </a>
+                @else
+                    @if($user->pets->isNotEmpty())
+                        @foreach($user->pets as $pet)
+                            <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mr-2" alt="{{ $pet->name }}">
+                        @endforeach
+                    @endif
+                @endif
+            </div>
+            <!-- @if(auth()->id() === $user->id)
+                <div class="mt-3">
+                    <a href="#" class="btn btn-primary btn-sm">ペット登録</a>
+                </div>
+            @endif -->
+        </div>
+    </div>
+    <div class="container mt-4">
+        @if(auth()->id() === $user->id)
+            <div class="d-flex border-bottom mb-3">
+                <button class="btn btn-link flex-fill text-muted active" style="font-size: 24px;"><i class="bi bi-grid-3x3"></i></button>
+                <button class="btn btn-link flex-fill text-muted"><i class="fa-solid fa-paw fa-2x"></i></button>
+            </div>
+        @endif
+        <div class="row">
+            @foreach($user->posts as $post)
+                <div class="col-md-4 mb-4">
+                    <div class="card" style="object-fit: cover;">
+                        <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top post-img" alt="投稿画像">
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
 @endsection

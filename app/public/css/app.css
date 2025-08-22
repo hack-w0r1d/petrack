@@ -97,6 +97,17 @@ main {
   }
 }
 
+.post-img {
+  width: 100%;
+  height: 25vw;
+  object-fit: cover;
+}
+
+.pet-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
