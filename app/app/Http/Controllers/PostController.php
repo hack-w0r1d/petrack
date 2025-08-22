@@ -39,8 +39,6 @@ class PostController extends Controller
 
         session(['temp_image' => $path]);
 
-        // $tags = Tag::all();
-        // return view('posts.create_detail', compact('path', 'tags'));
         return redirect()->route('posts.create.detail');
     }
 
@@ -52,32 +50,20 @@ class PostController extends Controller
         return view('posts.create_detail', compact('imagePath', 'tags'));
     }
 
-    public function confirm(Request $request) {
-
-        // $imagePath = session('temp_image');
-        // $caption = $request->caption;
+    public function createConfirm(Request $request) {
 
         session(['caption' => $request->caption]);
 
-        // return 'GET route reached';
-        return redirect()->route('posts.confirm.show');
-        // return view('posts.confirm', compact('imagePath', 'caption'));
+        return redirect()->route('posts.create.confirm');
     }
 
-    public function showConfirm() {
-        return 'showConfirm reached';
+    public function showCreateConfirm() {
+
+        $imagePath = session('temp_image');
+        $caption = session('caption');
+
+        return view('posts.confirm', compact('imagePath', 'caption'));
     }
-
-    // public function showConfirm() {
-    //     dd('showConfirm reached', session()->all());
-
-    //     $imagePath = session('temp_image');
-    //     $caption = session('caption');
-
-    //     dd($imagePath, $caption);
-
-    //     return view('posts.confirm', compact('imagePath', 'caption'));
-    // }
 
     /**
      * Store a newly created resource in storage.

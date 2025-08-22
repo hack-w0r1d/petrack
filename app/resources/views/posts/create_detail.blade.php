@@ -3,7 +3,7 @@
 @section('content')
 <img src="{{ asset('storage/' . $imagePath) }}" class="upload-preview" alt="アップロード画像">
 
-<form action="{{ route('posts.confirm') }}" method="POST">
+<form action="{{ route('posts.create.confirm') }}" method="POST">
     @csrf
     <div class="form-group">
         <label for="">ペット</label>
