@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <!-- 投稿画像 -->
-                        <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top" alt="投稿画像">
+                        <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top post-img" alt="投稿画像">
                         <!-- 足跡・コメント -->
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">

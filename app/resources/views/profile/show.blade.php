@@ -39,12 +39,15 @@
                 @if($user->id === Auth::id())
                     @if($user->pets->isNotEmpty())
                         @foreach($user->pets as $pet)
-                            <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mr-2" alt="{{ $pet->name }}">
+                            <a href="{{ route('pets.edit', ['pet' => $pet->id]) }}">
+                                <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mr-2" alt="{{ $pet->name }}">
+                            </a>
                         @endforeach
                     @endif
 
-                    <a href="#" class="mt-4 ml-5">
-                        <i class="bi bi-plus-circle text-secondary" style="font-size: 100px;"></i>
+                    <a href="{{ route('pets.create') }}" class="mt-4 ml-5 pt-2">
+                        <i class="bi bi-plus-circle text-secondary" style="font-size: 6vw;"></i>
+                        <div class="text-center text-white">ペット追加</div>
                     </a>
                 @else
                     @if($user->pets->isNotEmpty())
@@ -54,11 +57,6 @@
                     @endif
                 @endif
             </div>
-            <!-- @if(auth()->id() === $user->id)
-                <div class="mt-3">
-                    <a href="#" class="btn btn-primary btn-sm">ペット登録</a>
-                </div>
-            @endif -->
         </div>
     </div>
     <div class="container mt-4">
@@ -72,7 +70,7 @@
             @foreach($user->posts as $post)
                 <div class="col-md-4 mb-4">
                     <div class="card" style="object-fit: cover;">
-                        <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top post-img" alt="投稿画像">
+                        <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top profile-post-img" alt="投稿画像">
                     </div>
                 </div>
             @endforeach

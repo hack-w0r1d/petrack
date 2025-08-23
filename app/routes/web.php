@@ -21,4 +21,5 @@ Route::middleware('auth')->group(function() {
     Route::get('/posts/create/confirm', 'PostController@showCreateConfirm')->name('posts.create.confirm');
     Route::resource('posts', 'PostController');
     Route::resource('profile', 'ProfileController');
+    Route::resource('pets', 'PetController');
 });
