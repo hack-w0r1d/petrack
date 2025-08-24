@@ -29,9 +29,9 @@
         <div class="form-group">
             <label for="gender">性別</label>
             <select name="gender" class="form-control">
-                <option value="" {{ old('gender', $pet->gender) == '' ? 'selected' : '' }}>選択しない</option>
-                <option value="male" {{ old('gender', $pet->gender) == 'male' ? 'selected' : '' }}>♂</option>
-                <option value="female" {{ old('gender', $pet->gender) == 'female' ? 'selected' : '' }}>♀</option>
+                <option value="" {{ old('gender', $pet->gender) == '' ? 'selected' : '' }}>未選択</option>
+                <option value="1" {{ old('gender', $pet->gender) == '1' ? 'selected' : '' }}>♂</option>
+                <option value="2" {{ old('gender', $pet->gender) == '2' ? 'selected' : '' }}>♀</option>
             </select>
         </div>
         <div class="form-group">

@@ -10,6 +10,8 @@ class Pet extends Model
         'image_path', 'name', 'gender', 'birthday', 'species', 'breed'
     ];
 
+    protected $dates = ['birthday'];
+
     public function user()
     {
         return $this->belongsTo(User::class);

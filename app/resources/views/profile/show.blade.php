@@ -39,8 +39,8 @@
                 @if($user->id === Auth::id())
                     @if($user->pets->isNotEmpty())
                         @foreach($user->pets as $pet)
-                            <a href="{{ route('pets.edit', ['pet' => $pet->id]) }}">
-                                <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mr-2" alt="{{ $pet->name }}">
+                            <a href="{{ route('pets.edit', ['pet' => $pet]) }}">
+                                <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon {{ $loop->last ? '' : 'mr-5' }}" alt="{{ $pet->name }}">
                             </a>
                         @endforeach
                     @endif
