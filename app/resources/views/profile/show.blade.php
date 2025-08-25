@@ -16,7 +16,7 @@
                     <!-- プロフィール編集 / フォローステータス -->
                     <!-- 自分のプロフィールかどうかで表示切り替え -->
                     @if(auth()->id() === $user->id)
-                        <a href="#" class="btn btn-outline-secondary btn-sm">プロフィール編集</a>
+                        <a href="{{ route('profile.edit') }}" class="btn btn-outline-secondary btn-sm">プロフィール編集</a>
                     @else
                         <follow-button :user-id="{{ $user->id }}"></follow-button>
                     @endif
