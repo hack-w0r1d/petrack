@@ -77,7 +77,7 @@ body {
   background-color: black;
 }
 
-main {
+#main-container {
   margin-left: 250px;
 }
 
@@ -101,6 +101,18 @@ main {
   height: 40vw;
   object-fit: contain;
 } */
+
+.profile-img {
+  width: 10vw;
+  height: 10vw;
+  object-fit: cover;
+}
+
+#profile-img-preview {
+  width:150px;
+  height: 150px;
+  object-fit:cover;
+}
 
 .profile-post-img {
   width: 100%;

@@ -48,6 +48,8 @@ class PetController extends Controller
         $path = null;
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('uploads/pets', 'public');
+        } else {
+            $path = 'uploads/pets/default.png';
         }
         // DBに保存
         $request->user()->pets()->create([
@@ -133,8 +135,9 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pet $pet)
     {
-        //
+        $pet->delete();
+        return redirect()->route('profile.show', auth()->id())->with('success', '削除しました');
     }
 }

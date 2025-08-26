@@ -6,7 +6,7 @@
         <div class="row align-items-center">
             <!-- プロフィール画像 -->
             <div class="col-md-3" tect-center>
-                <img src="https://picsum.photos/200" class="rounded-circle img-fluid" alt="プロフィール画像">
+                <img src="{{ asset('storage/' . auth()->user()->image_path) }}" class="rounded-circle profile-img" alt="プロフィール画像">
             </div>
             <!-- ユーザー情報 -->
             <div class="col-md-9">
@@ -16,7 +16,7 @@
                     <!-- プロフィール編集 / フォローステータス -->
                     <!-- 自分のプロフィールかどうかで表示切り替え -->
                     @if(auth()->id() === $user->id)
-                        <a href="{{ route('profile.edit') }}" class="btn btn-outline-secondary btn-sm">プロフィール編集</a>
+                        <a href="{{ route('profile.edit', ['profile' => Auth::user()->id]) }}" class="btn btn-outline-secondary btn-sm">プロフィール編集</a>
                     @else
                         <follow-button :user-id="{{ $user->id }}"></follow-button>
                     @endif

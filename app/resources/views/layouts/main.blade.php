@@ -53,7 +53,7 @@
                                     <i class="bi bi-plus-square-fill mr-3"></i>作成</a>
                             </li>
                             <li class="nav-item my-3">
-                                <a class="nav-link text-white h5" href="{{ route('profile.show', ['profile' => Auth::user()->id]) }}">
+                                <a class="nav-link text-white h5" href="{{ route('profile.show', auth()->id()) }}">
                                     <i class="bi bi-person-fill mr-3"></i>プロフィール</a>
                             </li>
                         </ul>
@@ -83,7 +83,7 @@
                 </div>
 
                 <!-- メインコンテンツ -->
-                <main role="main" class="p-3">
+                <main role="main" id="main-container" class="p-3">
                     @yield('content')
                 </main>
             </div>

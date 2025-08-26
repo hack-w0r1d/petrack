@@ -10,7 +10,7 @@
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
-                                <img src="https://picsum.photos/200" class="rounded-circle" width="40" height="40" alt="プロフィール画像">
+                                <img src="{{ asset('storage/' . $post->user->image_path) }}" class="rounded-circle" width="40" height="40" alt="プロフィール画像">
                                 <div class="ml-2">
                                     <div class="font-weight-bold">{{ $post->user->name }}</div>
                                     <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
@@ -48,7 +48,7 @@
         <div class="col-md-4 pt-4">
             <div class="d-flex align-items-center">
                 <a href="{{ route('profile.show', ['profile' => Auth::user()->id]) }}">
-                    <img src="https://picsum.photos/200" class="rounded-circle mr-2" width="40" height="40" alt="プロフィール画像">
+                    <img src="{{ asset('storage/' . auth()->user()->image_path) }}" class="rounded-circle mr-2" width="40" height="40" alt="プロフィール画像">
                 </a>
                 <a class="ml-2" href="{{ route('profile.show', ['profile' => Auth::user()->id]) }}">
                     <div>
