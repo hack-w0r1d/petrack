@@ -10,9 +10,13 @@
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('storage/' . $post->user->image_path) }}" class="rounded-circle" width="40" height="40" alt="プロフィール画像">
+                                <a href="{{ route('profile.show', $post->user->id) }}">
+                                    <img src="{{ asset('storage/' . $post->user->image_path) }}" class="rounded-circle" width="40" height="40" alt="プロフィール画像">
+                                </a>
                                 <div class="ml-2">
-                                    <div class="font-weight-bold">{{ $post->user->name }}</div>
+                                    <a href="{{ route('profile.show', $post->user->id) }}">
+                                        <div class="font-weight-bold">{{ $post->user->name }}</div>
+                                    </a>
                                     <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
                                 </div>
                             </div>
@@ -38,7 +42,12 @@
                                 <span>{{ $post->comments_count ?? 0 }}</span>
                             </div>
 
-                            <p class="mb-1"><span class="font-weight-bold mr-2">{{ $post->user->name }}</span>{{ $post->caption }}</p>
+                            <p class="mb-1">
+                                <span class="font-weight-bold mr-2">
+                                    <a href="{{ route('profile.show', $post->user->id) }}">{{ $post->user->name }}</a>
+                                </span>
+                                {{ $post->caption }}
+                            </p>
                         </div>
                     </div>
                 @endforeach

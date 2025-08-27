@@ -6,7 +6,7 @@
         <div class="row align-items-center">
             <!-- プロフィール画像 -->
             <div class="col-md-3" tect-center>
-                <img src="{{ asset('storage/' . auth()->user()->image_path) }}" class="rounded-circle profile-img" alt="プロフィール画像">
+                <img src="{{ asset('storage/' . $user->image_path) }}" class="rounded-circle profile-img" alt="プロフィール画像">
             </div>
             <!-- ユーザー情報 -->
             <div class="col-md-9">
@@ -31,7 +31,7 @@
 
                 <!-- プロフィール紹介文 -->
                 <div class="mt-2">
-                    <p>$user->bio</p>
+                    <p>{{ $user->bio }}</p>
                 </div>
             </div>
             <!-- ペット -->
@@ -60,12 +60,10 @@
         </div>
     </div>
     <div class="container mt-4">
-        @if(auth()->id() === $user->id)
-            <div class="d-flex border-bottom mb-3">
-                <button class="btn btn-link flex-fill text-muted active" style="font-size: 24px;"><i class="bi bi-grid-3x3"></i></button>
-                <button class="btn btn-link flex-fill text-muted"><i class="fa-solid fa-paw fa-2x"></i></button>
-            </div>
-        @endif
+        <div class="d-flex border-bottom mb-3">
+            <button class="btn btn-link flex-fill text-muted active" style="font-size: 24px;"><i class="bi bi-grid-3x3"></i></button>
+            <button class="btn btn-link flex-fill text-muted"><i class="fa-solid fa-paw fa-2x"></i></button>
+        </div>
         <div class="row">
             @foreach($user->posts as $post)
                 <div class="col-md-4 mb-4">

@@ -84,7 +84,7 @@ class ProfileController extends Controller
 
         if ($request->hasFile('image')) {
             // 古い画像を削除
-            if ($profile->image_path && Storage::disk('public')->exists($profile->image_path)) {
+            if ($profile->image_path && Storage::disk('public')->exists($profile->image_path) && $profile->image_path !== 'uploads/users/default.png') {
                 Storage::disk('public')->delete($profile->image_path);
             }
             // 新しい画像を保存

@@ -227,14 +227,14 @@ sup {
 }
 
 a {
-  color: #3490dc;
+  color: white;
   text-decoration: none;
   background-color: transparent;
 }
 
-a:hover {
+/* a:hover {
   color: rgb(28.75, 104.3214285714, 166.75);
-}
+} */
 
 a:not([href]):not([class]) {
   color: inherit;

@@ -116,7 +116,7 @@ class PetController extends Controller
 
         if ($request->hasFile('image')) {
             // 古い画像を削除
-            if ($pet->image_path && Storage::disk('public')->exists($pet->image_path)) {
+            if ($pet->image_path && Storage::disk('public')->exists($pet->image_path) && $pet->image_path !== 'uploads/pets/default.png') {
                 Storage::disk('public')->delete($pet->image_path);
             }
             // 新しい画像を保存
