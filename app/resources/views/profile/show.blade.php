@@ -13,20 +13,39 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h4>{{ $user->name }}</h4>
 
-                    <!-- プロフィール編集 / フォローステータス -->
-                    <!-- 自分のプロフィールかどうかで表示切り替え -->
+                    <!-- 自分のプロフィール -->
                     @if(auth()->id() === $user->id)
-                        <a href="{{ route('profile.edit', ['profile' => Auth::user()->id]) }}" class="btn btn-outline-secondary btn-sm">プロフィール編集</a>
+                        <!-- プロフィール編集 -->
+                        <a href="{{ route('profile.edit', ['profile' => Auth::user()->id]) }}" class="btn btn-outline-secondary btn-sm">
+                            プロフィール編集
+                        </a>
                     @else
-                        <follow-button :user-id="{{ $user->id }}"></follow-button>
+                        <!-- 自分以外のユーザー -->
+                        @if(auth()->user()->isFollowing($user->id))
+                            <!-- フォローステータス -->
+                            <form action="{{ route('unfollow', $user->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">フォロー解除</button>
+                            </form>
+                        @else
+                            <form action="{{ route('follow', $user->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">フォローする</button>
+                            </form>
+                        @endif
                     @endif
                 </div>
 
-                <!-- 投稿件数 / フォロー / フォロワー -->
+                <!-- 投稿件数 / フォロー数 / フォロワー数 -->
                 <div class="mt-2">
                     <span>投稿<strong>{{ $user->posts->count() }}</strong>件</span>
-                    <span class="ml-3">フォロー<strong>$user->followings->count()</strong>人</span>
-                    <span class="ml-3">フォロワー<strong>$user->followers->count()</strong>人</span>
+                    <a href="{{ route('followings', $user->id) }}">
+                        <span class="ml-3">フォロー<strong>{{ $user->followings->count() }}</strong>人</span>
+                    </a>
+                    <a href="{{ route('followers', $user->id) }}">
+                        <span class="ml-3">フォロワー<strong>{{ $user->followers->count() }}</strong>人</span>
+                    </a>
                 </div>
 
                 <!-- プロフィール紹介文 -->

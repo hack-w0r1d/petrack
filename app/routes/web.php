@@ -22,4 +22,8 @@ Route::middleware('auth')->group(function() {
     Route::resource('posts', 'PostController');
     Route::resource('profile', 'ProfileController');
     Route::resource('pets', 'PetController');
+    Route::post('/{user}/follow', 'FollowController@store')->name('follow');
+    Route::delete('/{user}/unfollow', 'FollowController@destroy')->name('unfollow');
+    Route::get('{user}/followings', 'FollowController@followings')->name('followings');
+    Route::get('{user}/followers', 'FollowController@followers')->name('followers');
 });

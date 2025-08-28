@@ -120,6 +120,12 @@ body {
   object-fit: cover;
 }
 
+.follow-list-icon {
+  width: 3vw;
+  height: 3vw;
+  object-fit: cover;
+}
+
 .pet-icon {
   width: 6vw;
   height: 6vw;
