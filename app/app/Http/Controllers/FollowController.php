@@ -8,28 +8,36 @@ use App\User;
 
 class FollowController extends Controller
 {
-    public function store($userId)
+    public function follow(User $user)
     {
-        $user = Auth::user();
 
-        if ($user->id == $userId) {
+        // $user = Auth::user();
+
+        if ($user->id == Auth::id()) {
             return back()->with('error', '自分自身はフォローできません');
+        } else {
+            Auth::user()->followings()->syncWithoutDetaching([$user->id]);
+            return response()->json(['success' => true]);
         }
 
-        if (! $user->isFollowing($userId)) {
-            $user->followings()->attach($userId);
-        }
+        // if (! $user->isFollowing($userId)) {
+        //     $user->followings()->attach($userId);
+        // }
 
-        return back();
+        // return back();
     }
 
-    public function destroy($userId)
+    public function unfollow(User $user)
     {
-        $user = Auth::user();
 
-        $user->followings()->detach($userId);
+        Auth::user()->followings()->detach($user->id);
+        return response()->json(['success' => true]);
 
-        return back();
+        // $user = Auth::user();
+
+        // $user->followings()->detach($user->id);
+
+        // return response()->json(['success' => true]);
     }
 
     public function followings($id)
@@ -43,6 +51,10 @@ class FollowController extends Controller
 
     public function followers($id)
     {
-        return view('followers');
+        $user = User::findOrFail($id);
+
+        $followers = $user->followers->sortByDesc('pivot.created_at');
+
+        return view('followers', compact('user', 'followers'));
     }
 }

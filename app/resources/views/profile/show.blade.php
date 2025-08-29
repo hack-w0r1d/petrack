@@ -21,19 +21,9 @@
                         </a>
                     @else
                         <!-- 自分以外のユーザー -->
-                        @if(auth()->user()->isFollowing($user->id))
-                            <!-- フォローステータス -->
-                            <form action="{{ route('unfollow', $user->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">フォロー解除</button>
-                            </form>
-                        @else
-                            <form action="{{ route('follow', $user->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-primary">フォローする</button>
-                            </form>
-                        @endif
+                        <button type="button" class="btn btn-sm btn-primary follow-btn" data-username="{{ $user->name }}" data-user-id="{{ $user->id }}" data-is-following="{{ auth()->user()->isFollowing($user->id) ? '1' : '0' }}">
+                            {{ auth()->user()->isFollowing($user->id) ? 'フォロー中' : 'フォローする' }}
+                        </button>
                     @endif
                 </div>
 
@@ -94,4 +84,6 @@
         </div>
     </div>
 </div>
+
+@include('components.unfollow-modal')
 @endsection

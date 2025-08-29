@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 
 class HomeController extends Controller
@@ -24,7 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->orderBy('created_at', 'desc')->get();
+        $followingsIds = Auth::user()->followings()->pluck('users.id');
+
+        $posts = Post::whereIn('user_id', $followingsIds)->orWhere('user_id', Auth::id())->latest()->get();
+        // $posts = Post::with('user')->orderBy('created_at', 'desc')->get();
         return view('home', compact('posts'));
     }
 }

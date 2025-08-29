@@ -149,4 +149,10 @@ class PostController extends Controller
         // $post->delete();
         return redirect()->route('');
     }
+
+    public function explore()
+    {
+        $posts = Post::latest()->get();
+        return view('posts.explore', compact('posts'));
+    }
 }
