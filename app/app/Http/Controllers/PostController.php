@@ -88,7 +88,7 @@ class PostController extends Controller
         // ]);
 
         $filename = basename($tempPath);
-        $newPath = 'uploads/' . $filename;
+        $newPath = 'uploads/posts/' . $filename;
         Storage::disk('public')->move($tempPath, $newPath);
 
         $post = new Post();
@@ -108,9 +108,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -119,10 +119,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
         $this->authorize('update', $post);  // 自身の投稿以外は403エラー
-        return view('');
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -143,11 +143,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
         $this->authorize('delete', $post);  // 自身の投稿以外は403エラー
         // $post->delete();
-        return redirect()->route('');
+        return redirect()->route('home');
     }
 
     public function explore()

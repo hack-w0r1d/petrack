@@ -11,7 +11,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <a href="{{ route('profile.show', $post->user->id) }}">
-                                    <img src="{{ asset('storage/' . $post->user->image_path) }}" class="rounded-circle" width="40" height="40" alt="プロフィール画像">
+                                    <img src="{{ asset('storage/' . $post->user->image_path) }}" class="rounded-circle icon" alt="プロフィール画像">
                                 </a>
                                 <div class="ml-2">
                                     <a href="{{ route('profile.show', $post->user->id) }}">
@@ -25,8 +25,12 @@
                                     <i class="bi bi-three-dots" style="color: white; font-size: 1.3rem"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="postMenu{{ $post->id }}">
-                                    <a class="dropdown-item" href="#">編集</a>
-                                    <a class="dropdown-item" href="#">削除</a>
+                                    <a class="dropdown-item" href="{{ route('posts.edit', $post->id) }}">編集</a>
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="dropdown-item text-danger" type="submit">削除</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
