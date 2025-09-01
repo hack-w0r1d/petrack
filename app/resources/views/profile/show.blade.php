@@ -61,7 +61,7 @@
                 @else
                     @if($user->pets->isNotEmpty())
                         @foreach($user->pets as $pet)
-                            <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mr-2" alt="{{ $pet->name }}">
+                            <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mt-5 {{ $loop->last ? '' : 'mr-5' }}" alt="{{ $pet->name }}">
                         @endforeach
                     @endif
                 @endif
@@ -77,7 +77,9 @@
             @foreach($user->posts as $post)
                 <div class="col-md-4 mb-4">
                     <div class="card" style="object-fit: cover;">
-                        <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top profile-post-img" alt="投稿画像">
+                        <a href="{{ route('posts.show', $post->id) }}">
+                            <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top profile-post-img" alt="投稿画像">
+                        </a>
                     </div>
                 </div>
             @endforeach

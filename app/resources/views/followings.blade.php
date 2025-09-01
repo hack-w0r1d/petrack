@@ -9,7 +9,9 @@
         @foreach($followings as $following)
             <div class="d-flex align-items-start justify-content-between py-3">
                 <div class="d-flex align-items-start">
-                    <img src="{{ asset('storage/' . $following->image_path )}}" class="rounded-circle mr-3 follow-list-icon" alt="プロフィール画像">
+                    <a href="{{ route('profile.show', $following->id) }}" class="font-weight-bold">
+                        <img src="{{ asset('storage/' . $following->image_path )}}" class="rounded-circle mr-3 follow-list-icon" alt="プロフィール画像">
+                    </a>
                     <div>
                         <div>
                             <a href="{{ route('profile.show', $following->id) }}" class="font-weight-bold">

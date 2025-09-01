@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
+use App\Pet;
 use App\Tag;
 
 class PostController extends Controller
@@ -46,14 +48,30 @@ class PostController extends Controller
     public function showCreateDetail()
     {
         $imagePath = session('temp_image');
+        $pets = Auth::user()->pets;
         $tags = Tag::all();
 
-        return view('posts.create_detail', compact('imagePath', 'tags'));
+        return view('posts.create_detail', compact('imagePath', 'pets', 'tags'));
     }
 
     public function createConfirm(Request $request)
     {
-        session(['caption' => $request->caption]);
+        $validated = $request->validate([
+            'pet_id' => 'nullable|exists:pets,id',
+            'tags' => 'nullable|array|max:3',
+            'tags.*' => 'integer|exists:tags,id',
+            'caption' => 'nullable|string|max:300',
+        ]);
+
+        $tagIds = collect($validated['tags'] ?? [])->map(fn($id) => (int)$id)->unique()->take(3)->values()->all();
+
+        $tags = Tag::whereIn('id', $tagIds)->get();
+
+        session([
+            'pet_id' => $validated['pet_id'] ?? null,
+            'tags' => $tags,
+            'caption' => $validated['caption'] ?? '',
+        ]);
 
         return redirect()->route('posts.create.confirm');
     }
@@ -62,9 +80,11 @@ class PostController extends Controller
     {
 
         $imagePath = session('temp_image');
+        $pet = Pet::find(session('pet_id'));
+        $tags = session('tags');
         $caption = session('caption');
 
-        return view('posts.confirm', compact('imagePath', 'caption'));
+        return view('posts.confirm', compact('imagePath', 'pet', 'tags', 'caption'));
     }
 
     /**
@@ -76,16 +96,13 @@ class PostController extends Controller
     public function store()
     {
         $tempPath = session('temp_image');
+        $petId = session('pet_id');
+        $tags = session('tags');
         $caption = session('caption');
 
         if (!$tempPath) {
             return redirect()->route('posts.create')->withErrors('画像が見つかりません');
         }
-
-        // $validated = $request->validate([
-        //     'image' => 'required|file|image|max:2048',
-        //     'caption' => 'nullable|string|max:300',
-        // ]);
 
         $filename = basename($tempPath);
         $newPath = 'uploads/posts/' . $filename;
@@ -94,10 +111,13 @@ class PostController extends Controller
         $post = new Post();
         $post->user_id = auth()->id();
         $post->image_path = $newPath;
+        $post->pet_id = $petId;
         $post->caption = $caption;
         $post->save();
 
-        session()->forget(['temp_image', 'caption']);
+        $post->tags()->sync($tags);
+
+        session()->forget(['temp_image', 'pet_id', 'caption']);
 
         return redirect()->route('home')->with('success', '投稿が完了しました！');
     }
@@ -146,7 +166,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);  // 自身の投稿以外は403エラー
-        // $post->delete();
+        $post->delete();
         return redirect()->route('home');
     }
 

@@ -28,4 +28,5 @@ Route::middleware('auth')->group(function() {
     Route::get('{user}/followings', 'FollowController@followings')->name('followings');
     Route::get('{user}/followers', 'FollowController@followers')->name('followers');
     Route::delete('follows/{user}', 'FollowController@destroy')->name('follows.destroy');
+    Route::post('/posts/{post}/comments', 'CommentController@store')->name('comments.store');
 });

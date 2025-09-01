@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Post;
+use App\Pet;
+use App\Comment;
 
 class User extends Authenticatable
 {
@@ -58,5 +60,9 @@ class User extends Authenticatable
 
     public function isFollowing($userId) {
         return $this->followings()->where('followed_id', $userId)->exists();
+    }
+
+    public function comment() {
+        return $this->hasMany(Comment::class);
     }
 }

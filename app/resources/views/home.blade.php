@@ -6,7 +6,7 @@
         <!-- 投稿一覧 -->
         <div class="col-md-7 offset-md-1 pt-4">
             <div class="post-wrapper mx-auto">
-                @foreach ($posts as $post)
+                @forelse ($posts as $post)
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
@@ -42,8 +42,10 @@
                                 <button class="btn btn-link p-0 mr-3 text-muted"><i class="fa-solid fa-paw"></i></button>
                                 <span class="mr-4">{{ $post->likes_count ?? 0 }}</span>
 
-                                <button class="btn btn-link p-0 mr-3 text-white"><i class="bi bi-chat"></i></button>
-                                <span>{{ $post->comments_count ?? 0 }}</span>
+                                <button class="btn btn-link p-0 mr-3 text-white">
+                                    <a href="{{ route('posts.show', $post->id) }}"><i class="bi bi-chat"></i></a>
+                                </button>
+                                <span>{{ $post->comments->count() }}</span>
                             </div>
 
                             <p class="mb-1">
@@ -54,7 +56,12 @@
                             </p>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="text-center" style="font-size: 1.5vw;">
+                        <p>投稿がありません</p>
+                        <p>お気に入りのユーザーを見つけてフォローしてみよう</p>
+                    </div>
+                @endforelse
             </div>
         </div>
         <!-- おすすめ(仮) -->

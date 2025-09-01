@@ -27,7 +27,7 @@
         </div>
         <div class="d-flex justify-content-around mt-4">
             <a href="{{ route('profile.show', auth()->id()) }}" class="btn btn-secondary w-25">キャンセル</a>
-            <button type="submit" class="btn btn-primary w-25">編集</button>
+            <button type="submit" class="btn btn-primary w-25">更新する</button>
         </div>
     </form>
 </div>
