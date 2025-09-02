@@ -67,6 +67,13 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <!-- 管理者用リンク -->
+                                    @if(Auth::check() && auth()->user()->isAdmin())
+                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                            管理者用
+                                        </a>
+                                    @endif
+                                    <!-- ログアウト -->
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
