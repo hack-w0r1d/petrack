@@ -1877,7 +1877,7 @@ pre code {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #212529;
+  color: gray;
 }
 
 .table th,
@@ -5123,6 +5123,13 @@ input[type=button].btn-block {
   /* flex: 0, 0, 250px; */
   width: 250px;
   height: 100vh;
+}
+
+.return-dashboard-btn {
+  position: fixed;
+  bottom: 3vw;
+  right: 3vw;
+  z-index: 1000;
 }
 
 .card {

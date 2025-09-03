@@ -10,12 +10,12 @@
             </a>
         </div>
         <div class="col-md-4">
-            <a href="{{ route('admin.posts.index') }}" class="btn btn-success btn-block">
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-danger btn-block">
                 📝投稿管理
             </a>
         </div>
         <div class="col-md-4">
-            <a href="{{ route('admin.comments.index') }}" class="btn btn-danger btn-block">
+            <a href="{{ route('admin.comments.index') }}" class="btn btn-success btn-block">
                 💬コメント管理
             </a>
         </div>

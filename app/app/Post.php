@@ -11,11 +11,13 @@ use App\Comment;
 
 class Post extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'pet_id', 'image_path', 'caption'
     ];
 
-    use SoftDeletes;
+    protected $dates = ['deleted_at'];
 
     public function user()
     {

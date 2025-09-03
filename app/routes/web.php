@@ -19,6 +19,16 @@ Route::middleware(['auth', 'can:isAdmin'])->prefix('admin')->group(function () {
     Route::get('/users', 'Admin\UserController@index')->name('admin.users.index');
     Route::get('/posts', 'Admin\PostController@index')->name('admin.posts.index');
     Route::get('/comments', 'Admin\CommentController@index')->name('admin.comments.index');
+
+    Route::delete('/users/destroy/{id}}', 'Admin\UserController@destroy')->name('admin.users.destroy');
+
+    Route::delete('/posts/delete/{id}}', 'Admin\PostController@delete')->name('admin.posts.delete');
+    Route::patch('/posts/restore/{id}}', 'Admin\PostController@restore')->name('admin.posts.restore');
+    Route::delete('/posts/forceDelete/{id}}', 'Admin\PostController@forceDelete')->name('admin.posts.forceDelete');
+
+    Route::delete('/comments/delete/{id}}', 'Admin\CommentController@delete')->name('admin.comments.delete');
+    Route::patch('/comments/restore/{id}}', 'Admin\CommentController@restore')->name('admin.comments.restore');
+    Route::delete('/comments/forceDelete/{id}}', 'Admin\CommentController@forceDelete')->name('admin.comments.forceDelete');
 });
 
 Route::middleware('auth')->group(function() {

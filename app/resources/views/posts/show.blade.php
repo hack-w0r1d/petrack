@@ -62,7 +62,11 @@
                             <a href="{{ route('profile.show', $comment->user_id) }}">
                                 <strong>{{ $comment->user->name }}</strong>
                             </a>
-                            <span>{{ $comment->body }}</span>
+                            @if($comment->is_deleted_by_admin)
+                                <span class="text-muted"><管理者により削除されました></span>
+                            @else
+                                <span>{{ $comment->body }}</span>
+                            @endif
                             <div><small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small></div>
                         </div>
                     </div>
