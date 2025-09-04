@@ -41,7 +41,7 @@
                                     <i class="bi bi-house-door-fill mr-3"></i>ホーム</a>
                             </li>
                             <li class="nav-item my-3">
-                                <a class="nav-link text-white h5" href="">
+                                <a class="nav-link text-white h5" href="{{ route('search') }}">
                                     <i class="bi bi-search mr-3"></i>検索</a>
                             </li>
                             <li class="nav-item my-3">

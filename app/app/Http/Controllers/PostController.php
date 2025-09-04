@@ -166,8 +166,37 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);  // 自身の投稿以外は403エラー
+        $post->deleted_by = $post->user_id;
+        $post->save();
         $post->delete();
         return redirect()->route('home');
+    }
+
+    public function search(Request $request)
+    {
+        $query = Post::with('pet');
+
+        if ($request->filled('species')) {
+            $query->whereHas('pet', function ($q) use ($request) {
+                $q->where('species', 'like', '%' . $request->species . '%');
+            });
+        }
+
+        if ($request->filled('breed')) {
+            $query->whereHas('pet', function ($q) use ($request) {
+                $q->where('breed', 'like', '%' . $request->breed . '%');
+            });
+        }
+
+        if ($request->filled('species') || $request->filled('breed')) {
+            $posts = $query->latest()->paginate(9);
+        } else {
+            $posts = Post::whereNull('id')->paginate(9);
+        }
+
+        // $posts = ($request->filled('species')) || $request->filled('breed') ? $query->latest()->paginate(3) : collect();
+
+        return view('posts.search', compact('posts', 'request'));
     }
 
     public function explore()

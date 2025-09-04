@@ -86,27 +86,3 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(err => console.error(err));
   }
 });
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   let targetForm;
-
-//   // フォロー解除ボタンが押されたら確認モーダル表示
-//   document.querySelectorAll('.follow-btn').forEach(btn => {
-//       btn.addEventListener('click', () => {
-//           const username = btn.dataset.username;
-//           targetForm = btn.closest('form');
-
-//           document.getElementById('unfollowMessage').textContent = `${username} のフォローを解除しますか？`;
-
-//           $('#unfollowModal').modal('show');
-//       });
-//   });
-
-//   // 「解除する」が押されたらフォーム送信
-//   document.getElementById('confirmUnfollow').addEventListener('click', () => {
-//       if (targetForm) {
-//           targetForm.submit();
-//       }
-//   });
-// });

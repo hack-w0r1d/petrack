@@ -20,27 +20,37 @@
                                     <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
                                 </div>
                             </div>
-                            <div class="dropdown">
-                                <button class="btn btn-sm dropdown-toggle" type="button" id="postMenu{{ $post->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="bi bi-three-dots" style="color: white; font-size: 1.3rem"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="postMenu{{ $post->id }}">
-                                    <a class="dropdown-item" href="{{ route('posts.edit', $post->id) }}">編集</a>
-                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="dropdown-item text-danger" type="submit">削除</button>
-                                    </form>
+                            @if($post->user_id === auth()->id())
+                                <div class="dropdown">
+                                    <button class="btn btn-sm dropdown-toggle" type="button" id="postMenu{{ $post->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="bi bi-three-dots" style="color: white; font-size: 1.3rem"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="postMenu{{ $post->id }}">
+                                        <a class="dropdown-item" href="{{ route('posts.edit', $post->id) }}">編集</a>
+                                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('投稿を削除しますか？');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="dropdown-item text-danger" type="submit">削除</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                         <!-- 投稿画像 -->
                         <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top post-img" alt="投稿画像">
                         <!-- 足跡・コメント -->
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
-                                <button class="btn btn-link p-0 mr-3 text-muted"><i class="fa-solid fa-paw"></i></button>
-                                <span class="mr-4">{{ $post->likes_count ?? 0 }}</span>
+                                @if($post->isLikedBy(auth()->user()))
+                                    <button class="btn btn-link p-0 mr-3 text-muted unlike-btn" data-id="{{ $post->id }}">
+                                        <i class="fa-solid fa-paw" style="color: pink;"></i>
+                                    </button>
+                                @else
+                                    <button class="btn btn-link p-0 mr-3 text-muted like-btn" data-id="{{ $post->id }}">
+                                        <i class="fa-solid fa-paw"></i>
+                                    </button>
+                                @endif
+                                <span id="likes-count-{{ $post->id }}" class="mr-4">{{ $post->likes->count() }}</span>
 
                                 <button class="btn btn-link p-0 mr-3 text-white">
                                     <a href="{{ route('posts.show', $post->id) }}"><i class="bi bi-chat"></i></a>

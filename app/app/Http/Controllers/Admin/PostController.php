@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 
 class PostController extends Controller
@@ -29,6 +30,10 @@ class PostController extends Controller
     public function delete($id)
     {
         $post = Post::findOrFail($id);
+        $post->deleted_by = Auth::id();
+
+        $post->save();
+
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('delete', '投稿を削除しました');
@@ -37,8 +42,9 @@ class PostController extends Controller
     public function restore($id)
     {
         $post = Post::onlyTrashed()->findOrFail($id);
-
         $post->restore();
+        $post->deleted_by = null;
+        $post->save();
 
         return redirect()->route('admin.posts.index')->with('success', '投稿を復元しました');
     }

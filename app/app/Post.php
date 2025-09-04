@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Pet;
 use App\Tag;
+use App\Like;
 use App\Comment;
 
 class Post extends Model
@@ -18,6 +20,17 @@ class Post extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post) {
+            if ($post->isForceDeleting() && $post->image_path) {
+                Storage::disk('public')->delete($post->image_path);
+            }
+        });
+    }
 
     public function user()
     {
@@ -31,6 +44,15 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function likes() {
+        return $this->hasMany(Like::class);
+    }
+
+    public function isLikedBy($user)
+    {
+        return $this->likes()->where('user_id', $user->id)->exists();
     }
 
     public function comments() {

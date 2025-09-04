@@ -39,6 +39,11 @@ Route::middleware('auth')->group(function() {
     Route::post('/posts/create/confirm', 'PostController@createConfirm')->name('posts.create.confirm');
     Route::get('/posts/create/confirm', 'PostController@showCreateConfirm')->name('posts.create.confirm');
 
+    Route::post('/posts/{post}}/like', 'LikeController@store')->name('posts.like');
+    Route::delete('/posts/{post}}/like', 'LikeController@destroy')->name('posts.unlike');
+
+    Route::get('/search', 'PostController@search')->name('search');
+
     Route::get('/explore', 'PostController@explore')->name('explore');
 
     Route::resource('posts', 'PostController');

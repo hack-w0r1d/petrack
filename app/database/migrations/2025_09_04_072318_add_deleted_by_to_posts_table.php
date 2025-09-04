@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsDeletedByAdminToPostsTable extends Migration
+class AddDeletedByToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,9 @@ class AddIsDeletedByAdminToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->boolean('is_deleted_by_admin')->default(false)->after('deleted_at');
+            $table->unsignedBigInteger('deleted_by')->nullable();
+
+            $table->foreign('deleted_by')->references('id')->on('users');
         });
     }
 
@@ -26,7 +28,7 @@ class AddIsDeletedByAdminToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('is_deleted_by_admin');
+            $table->dropColumn('deleted_by');
         });
     }
 }
