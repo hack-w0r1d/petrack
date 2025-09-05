@@ -55,7 +55,7 @@
             <label for="species">種（例：犬、猫）</label>
             <input type="text" name="species" class="form-control" value="{{ old('species', $pet->species) }}">
         </div>
-        <div class="form-group">
+        <div class="form-group pb-3">
             <label for="breed">品種（例：トイプードル、スコティッシュフォールド）</label>
             <input type="text" name="breed" class="form-control" value="{{ old('breed', $pet->breed) }}">
         </div>

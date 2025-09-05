@@ -12,12 +12,14 @@ class LikeController extends Controller
     // いいね（足跡）登録
     public function store(Post $post)
     {
-        $post->likes()->create([
-            'user_id' => Auth::id(),
-        ]);
+        if (!$post->likes()->where('user_id', Auth::id())->exists()) {
+            $post->likes()->create([
+                'user_id' => Auth::id(),
+            ]);
+        }
 
         return response()->json([
-            'message' => 'いいねしました',
+            'status' => 'liked',
             'likes_count' => $post->likes()->count(),
         ]);
     }
@@ -27,7 +29,7 @@ class LikeController extends Controller
         $post->likes()->where('user_id', Auth::id())->delete();
 
         return response()->json([
-            'message' => 'いいねを解除しました',
+            'status' => 'unliked',
             'likes_count' => $post->likes()->count(),
         ]);
     }

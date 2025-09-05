@@ -61,7 +61,10 @@
                 @else
                     @if($user->pets->isNotEmpty())
                         @foreach($user->pets as $pet)
-                            <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mt-5 {{ $loop->last ? '' : 'mr-5' }}" alt="{{ $pet->name }}">
+                            <a href="#">
+                                <img src="{{ asset('storage/' . $pet->image_path) }}" class="rounded-circle pet-icon mt-5 {{ $loop->last ? '' : 'mr-5' }}" alt="{{ $pet->name }}">
+                                <div class="text-center text-white mt-3 {{ $loop->last ? '' : 'mr-5' }}">{{ $pet->name }}</div>
+                            </a>
                         @endforeach
                     @endif
                 @endif

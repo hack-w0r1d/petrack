@@ -12,6 +12,73 @@ window.addEventListener('resize', setScrollbarWidth);
 
 
 document.addEventListener('DOMContentLoaded', function() {
+
+  document.querySelectorAll('.like-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      const postId = this.dataset.postId;
+      const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      const url = this.classList.contains('liked')
+        ? `/posts/${postId}/unlike`
+        : `/posts/${postId}/like`;
+
+      const method = this.classList.contains('liked') ? 'DELETE' : 'POST';
+
+      fetch(url, {
+        method: method,
+        headers: {
+          'X-CSRF-TOKEN': token,
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'liked') {
+          this.classList.add('liked');
+        } else {
+          this.classList.remove('liked');
+        }
+        document.getElementById(`likes-count-${postId}`).textContent = data.likes_count;
+      })
+      .catch(error => console.error('Error:', error));
+    });
+  });
+
+  // const token = document.querySelector('meta[name="csrf-token"]').content;
+
+  // document.addEventListener('click', async (e) => {
+
+  //   const button = e.target.closest('.like-btn');
+  //   if (!button) return;
+
+  //   const postId = button.dataset.postId;
+  //   const isLiked = button.classList.contains('liked');
+
+  //   const url = isLiked ? `/posts/${postId}/unlike` : `/posts/${postId}/like`;
+  //   const method = isLiked ? 'DELETE' : 'POST';
+
+  //   try {
+  //     const res = await fetch(url, {
+  //       method: method,
+  //       headers: {
+  //         'X-CSRF-TOKEN': token,
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({}),
+  //     });
+
+  //     if (!res.ok) throw new Error(res.status);
+
+  //     const data = await res.json();
+
+  //     document.getElementById(`likes-count-${postId}`).textContent = data.likes_count;
+
+  //   } catch (err) {
+  //     console.error('通信エラー', err);
+  //     alert('エラーが発生しました。もう一度お試しください。')
+  //   }
+  // });
+
   // フォローステータスの処理
   const followButtons = document.querySelectorAll('.follow-btn');
   let targetButton = null;

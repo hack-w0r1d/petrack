@@ -41,15 +41,9 @@
                         <!-- 足跡・コメント -->
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-2">
-                                @if($post->isLikedBy(auth()->user()))
-                                    <button class="btn btn-link p-0 mr-3 text-muted unlike-btn" data-id="{{ $post->id }}">
-                                        <i class="fa-solid fa-paw" style="color: pink;"></i>
-                                    </button>
-                                @else
-                                    <button class="btn btn-link p-0 mr-3 text-muted like-btn" data-id="{{ $post->id }}">
-                                        <i class="fa-solid fa-paw"></i>
-                                    </button>
-                                @endif
+                                <button class="btn btn-link p-0 mr-3 text-muted like-btn {{ $post->isLikedBy(auth()->user()) ? 'liked' : '' }}" data-post-id="{{ $post->id }}">
+                                    <i class="fa-solid fa-paw"></i>
+                                </button>
                                 <span id="likes-count-{{ $post->id }}" class="mr-4">{{ $post->likes->count() }}</span>
 
                                 <button class="btn btn-link p-0 mr-3 text-white">

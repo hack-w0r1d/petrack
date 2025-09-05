@@ -138,6 +138,10 @@ body {
   overflow-y: auto;
 }
 
+.like-btn.liked i {
+  color: pink;
+}
+
 .profile-img {
   width: 10vw;
   height: 10vw;

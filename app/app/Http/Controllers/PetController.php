@@ -138,6 +138,10 @@ class PetController extends Controller
     public function destroy(Pet $pet)
     {
         $pet->delete();
+        if ($pet->image_path && Storage::disk('public')->exists($pet->image_path) && $pet->image_path !== 'uploads/pets/default.png') {
+            Storage::disk('public')->delete($pet->image_path);
+        }
+
         return redirect()->route('profile.show', auth()->id())->with('success', '削除しました');
     }
 }
