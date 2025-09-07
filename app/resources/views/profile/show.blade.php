@@ -73,22 +73,64 @@
     </div>
     <div class="container mt-4">
         <div class="d-flex border-bottom mb-3">
-            <button class="btn btn-link flex-fill text-muted active" style="font-size: 24px;"><i class="bi bi-grid-3x3"></i></button>
-            <button class="btn btn-link flex-fill text-muted"><i class="fa-solid fa-paw fa-2x"></i></button>
+            <div class="flex-fill text-muted text-center">
+                <i class="bi bi-grid-3x3 tab-btn active text-light" data-target="posts" style="font-size: 24px; cursor: pointer;"></i>
+            </div>
+            <div class="flex-fill text-muted text-center">
+                <i class="fa-solid fa-paw fa-2x flex-fill tab-btn active" data-target="likes" style="cursor: pointer;"></i>
+            </div>
+            <!-- <button class="btn btn-link flex-fill text-muted tab-btn active" data-target="posts" style="font-size: 24px;"><i class="bi bi-grid-3x3"></i></button>
+            <button class="btn btn-link flex-fill text-muted tab-btn" data-target="likes"><i class="fa-solid fa-paw fa-2x"></i></button> -->
         </div>
-        <div class="row">
-            @foreach($user->posts as $post)
-                <div class="col-md-4 mb-4">
-                    <div class="card" style="object-fit: cover;">
-                        <a href="{{ route('posts.show', $post->id) }}">
-                            <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top profile-post-img" alt="投稿画像">
-                        </a>
+        <!-- ユーザーの投稿画像一覧 -->
+        <div id="posts" class="tab-content">
+            <div class="row">
+                @foreach($user->posts as $post)
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="object-fit: cover;">
+                            <a href="{{ route('posts.show', $post->id) }}">
+                                <img src="{{ asset('storage/' . $post->image_path) }}" class="card-img-top profile-post-img" alt="投稿画像">
+                            </a>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
+        </div>
+        <!-- 足跡をつけた投稿一覧 -->
+        <div id="likes" class="tab-content d-none">
+            <div class="row">
+                @foreach($user->likes as $like)
+                    @if($like->post)
+                        <div class="col-md-4 mb-4">
+                            <div class="card" style="object-fit: cover;">
+                                <a href="{{ route('posts.show', $like->post->id) }}">
+                                    <img src="{{ asset('storage/' . $like->post->image_path) }}" class="card-img-top profile-post-img" alt="投稿画像">
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
         </div>
     </div>
 </div>
 
 @include('components.unfollow-modal')
+
+<script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.classList.add('d-none');
+            });
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active', 'text-light');
+            });
+
+            const target = btn.dataset.target;
+            document.getElementById(target).classList.remove('d-none');
+            btn.classList.add('active', 'text-light');
+        });
+    });
+</script>
 @endsection

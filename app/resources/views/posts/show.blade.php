@@ -11,13 +11,19 @@
         <div class="col-md-5 d-flex flex-column post-show-right">
             <!-- 投稿情報ヘッダー -->
             <div class="d-flex align-items-center justify-content-between p-3">
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-start">
                     <a href="{{ route('profile.show', $post->user_id) }}">
                         <img src="{{ $post->pet ? asset('storage/' . $post->pet->image_path) : asset('storage/' . $post->user->image_path) }}" class="rounded-circle mr-2 icon" alt="ペットアイコン">
                     </a>
-                    <a href="{{ route('profile.show', $post->user_id) }}">
-                        <strong>{{ $post->pet ? $post->pet->name : $post->user->name }}</strong>
-                    </a>
+                    <div>
+                        <a href="{{ route('profile.show', $post->user_id) }}">
+                            <strong>{{ $post->pet ? $post->pet->name : $post->user->name }}</strong>
+                        </a>
+                        <div>
+                            <small class="text-muted">{{ $post->pet->species }}</small>
+                            <small class="text-muted">{{ $post->pet->breed }}</small>
+                        </div>
+                    </div>
                 </div>
                 <!-- 自分の投稿ならメニューボタンを表示 -->
                 @if($post->user_id === auth()->id())
@@ -27,7 +33,7 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="postMenu{{ $post->id }}">
                             <a class="dropdown-item" href="{{ route('posts.edit', $post->id) }}">編集</a>
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('投稿を削除しますか？');">
                                 @csrf
                                 @method('DELETE')
                                 <button class="dropdown-item text-danger" type="submit">削除</button>
@@ -80,10 +86,12 @@
             </div>
             <!-- 足跡・コメント -->
             <div class="p-3">
-                <button class="btn btn-link p-0 mr-3 text-muted"><i class="fa-solid fa-paw"></i></button>
-                <span class="mr-4">{{ $post->likes_count ?? 0 }}</span>
+                <button class="btn btn-link p-0 mr-3 text-muted like-btn {{ $post->isLikedBy(auth()->user()) ? 'liked' : '' }}" data-post-id="{{ $post->id }}">
+                    <i class="fa-solid fa-paw"></i>
+                </button>
+                <span id="likes-count-{{ $post->id }}" class="mr-4">{{ $post->likes->count() }}</span>
 
-                <button class="btn btn-link p-0 mr-3 text-white"><i class="bi bi-chat"></i></button>
+                <button id="comment-icon" class="btn btn-link p-0 mr-3 text-white"><i class="bi bi-chat"></i></button>
                 <span>{{ $post->comments->count() }}</span>
             </div>
             <div class="p-3 text-muted">
@@ -92,11 +100,17 @@
             <div class="p-3">
                 <form action="{{ route('comments.store', $post->id) }}" method="POST" class="d-flex comment-form">
                     @csrf
-                    <input type="text" name="comment" class="form-control mr-2 flex-grow-1" placeholder="コメントを追加...">
+                    <input type="text" name="comment" id="comment-input" class="form-control mr-2 flex-grow-1" placeholder="コメントを追加...">
                     <button type="submit" class="btn btn-primary flex-shrink-0">投稿する</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('comment-icon').addEventListener('click', function () {
+        document.getElementById('comment-input').focus();
+    });
+</script>
 @endsection

@@ -13,7 +13,7 @@
         <select name="filter" id="" onchange="this.form.submit()" class="form-control w-auto d-inline-block">
             <option value="with" {{ $filter === 'with' ? 'selected' : '' }}>全ての投稿（削除済みを含む）</option>
             <option value="without" {{ $filter === 'without' ? 'selected' : '' }}>削除されていない投稿のみ</option>
-            <option value="only" {{ $filter === 'only' ? 'selected' : '' }}>削除済みのみ</option>
+            <option value="only" {{ $filter === 'only' ? 'selected' : '' }}>削除済みの投稿</option>
         </select>
     </form>
     <table class="table">
